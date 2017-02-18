@@ -2,7 +2,7 @@ To Install:
 
 1. Clone project:
         
-        git@github.com:samgclarke/celery-demo.git
+        git clone git@github.com:samgclarke/celery-demo.git
 
 2. Install dependencies:
 
