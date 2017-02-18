@@ -1,0 +1,5 @@
+import os
+
+BROKER_URL = os.environ['BROKER_URL']
+CELERY_RESULT_BACKEND = os.environ['BROKER_URL']
+CELERYD_POOL_RESTARTS = True
