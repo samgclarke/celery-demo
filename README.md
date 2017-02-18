@@ -1,6 +1,8 @@
 To Install:
 
-1. clone project
+1. Clone project:
+        
+        git@github.com:samgclarke/celery-demo.git
 
 2. Install dependencies:
 
@@ -14,4 +16,4 @@ To Install:
 
         celery worker -A app.celery --log-level=debug
 
-5. Navigate to 127.0.0.1:5000 in your browser.
+5. Navigate to 127.0.0.1:5000 in your browser, and open the dev console to see some (maybe) meaningful messages.
