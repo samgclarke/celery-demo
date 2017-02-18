@@ -9,21 +9,18 @@ import os
 
 
 app = Flask(__name__)
+
+#  can also configure directly
+'''
 celery = Celery(
     'app',
-    broker=os.environ['BROKER_URL'],
+    broker='amqp://guest@localhost//',
     backend='redis://localhost:6379/0'
 )
-
-#celery.config_from_object('celery_config')
-
 '''
-#  can also configure directly
-celery = Celery(
-    broker="amqp://guest@localhost//",
-    backend="redis://localhost:6379/0"
-)
-'''
+
+celery = Celery('app')
+celery.config_from_object('celery_config')
 
 
 #  NORMAL LOGGING
@@ -34,34 +31,17 @@ app.logger.addHandler(handler)
 celery_logger = get_task_logger(__name__)
 
 
-
-###########
-## TASKS ##
-###########
+#############
+##  TASKS  ##
+#############
 @celery.task
 def send_email(x, y):
-   return x + y 
+    return x + y
 
 
 @celery.task
-def add(n=100):
-    celery_logger.info('I\'m in Celery!')
-    i = 2
-    result = []
-    while i < n:
-        flag = True
-        for item in range(2, int(i**0.5)+1):
-            if i % item == 0 and i != item: 
-                flag = False
-                break
-        if flag:
-            result.append(i)
-        i += 1
-
-        #  NOTE: this print statement will go to CELERY
-        print result
-
-    return result
+def add(x, y):
+    return x + y
 
 
 ############
@@ -71,7 +51,7 @@ def add(n=100):
 def index():
     '''Indx route.'''
     app.logger.info('I\'m Alive!')
-    task = compute.delay(5)
+    task = add.delay(5, 7)
     '''
     ^ We call our task asynchronously.
     Note that .delay is shorthand for .apply_async()
@@ -81,7 +61,6 @@ def index():
     and is useful if we want to reference the task later,
     but is itself NOT the result of the function.
     '''
-    
 
     #while not result.ready():
     #    #  NOTE: this print statement will go to STDOUT
@@ -119,8 +98,7 @@ def chaining():
 def taskstatus(task_id):
     """Get task status."""
     result = None
-    
-    task = compute.AsyncResult(task_id)
+    task = add.AsyncResult(task_id)
     '''
     ^ Get the task in it's present state.
     '''
@@ -129,7 +107,7 @@ def taskstatus(task_id):
         result = task.get()
     '''
     ^ If the task is done, we can ask for the result returned by our
-    compute function.
+    add function.
     '''
 
     return json.dumps(
