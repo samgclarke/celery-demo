@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Celery - Demo</title>
+        <title>Celery Demystified - Demo</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
@@ -30,14 +30,10 @@
         <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.4.min.js"><\/script>')</script>
 
-        <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-        <script>
-            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-            ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
-        </script>
         <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
         <script>
+          // Our JS needs to know about our Celery task id.
           var task_id = '{{ task.id }}';
         </script>
         <script type="application/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
