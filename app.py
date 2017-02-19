@@ -31,16 +31,13 @@ app.logger.addHandler(handler)
 celery_logger = get_task_logger(__name__)
 
 
-#############
-##  TASKS  ##
-#############
-@celery.task
-def send_email(x, y):
-    return x + y
-
-
+###########
+## TASKS ##
+###########
 @celery.task
 def add(x, y):
+    #  just to keep you waiting long enough...
+    time.sleep(3)
     return x + y
 
 
