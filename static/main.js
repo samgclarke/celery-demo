@@ -6,7 +6,7 @@ $( document ).ready(function() {
 	    setTimeout(function() {
 		    $.get("/status/" + task_id, function(result, status){
 		    	var data = jQuery.parseJSON(result);
-	        console.log('data:', data.state);
+	        console.log('Task State:', data.state);
 	        //  Here we keep polling until the task has completed successfully. 
           //  Note that in a production application we would want to handle 
           //  FAILURE and REVOKED states also!
